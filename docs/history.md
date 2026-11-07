@@ -22,3 +22,18 @@ The 26.04 upgrade is running but not finished. The system is still on 24.04.5. I
 - **KB:** I added the interruption, recovery and detached-launch notes to `docs/kb/upgrade/24.04-to-26.04.md`. I haven't touched `docs/history.md`.
 <!-- ------ -->
 ---
+Your WSL is now on Ubuntu 26.04.1 LTS (Resolute Raccoon), and `apt update && apt full-upgrade` runs cleanly. Nothing from your original manual-install list is missing, `~/Code` is intact, and conda and the GPU (`nvidia-smi`) still work. I haven't rebooted or tested Docker, KiCad or webmin.
+
+- **Why apt was failing:** the WSL kernel mounts its own `perf` over `/usr/bin/perf`, and `dpkg` can't replace a mount point. It hit again during the release upgrade and aborted it near the end. I unmounted `perf` to finish and then remounted it. It will recur whenever a `perf` package updates, so unmount `/usr/bin/perf` first and remount it after.
+- **Python 3.12:** Ubuntu 26.04 doesn't ship it, and the deadsnakes build clashes with the old noble packages. Your venvs link to it and need 3.12.3.
+  - **What I did:** I kept the noble 3.12.3 packages and held them, so `apt upgrade` will list 5 packages as "kept back". That is expected.
+  - **My mistake:** apt's repair step removed `python3.12-venv` and `python3.12-dev`. I restored both from the noble archive with checksums verified.
+- **Venvs:** 26.04 made `python3` 3.14, which silently switched 10 of your 3.12 venvs to 3.14 and hid their packages. I repointed their interpreter links to `/usr/bin/python3.12`. Under `~/Code` I changed `vid`, `su2-node-matrix-elements`, `cosmological-constant-workbench`, `su2-3nj-unified-framework`, and two venvs in `warp-bubble-qft`. The other four are in `~/.venv`, `~/.venvs` and `~/refact-server`. The old link targets are in `~/ubuntu-24.04-backup/venv-symlink-changes.txt`.
+- **Third-party repos:** CUDA, GitHub CLI, nvidia-container-toolkit, webmin, zotero, KiCad and deadsnakes are enabled again and updating. I left the cockpit-files PPA disabled because it has no 26.04 release, and the two Microsoft repos stay disabled as before.
+- **`autoremove`:** I haven't run it, and I'd skip it. Its list includes `python3.12`, `openjdk-21` and old `g++-13`, which you may use.
+
+Run `wsl --shutdown` from Windows and reopen the terminal. The upgrade replaced the dbus daemon, which only restarts that way.
+
+The KB in `docs/kb/` has the details, and I didn't touch `docs/history.md`. It already shows as modified in git, so I haven't committed anything.
+<!-- ------ -->
+---
