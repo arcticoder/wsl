@@ -48,3 +48,15 @@ On first launch it found settings from an older install (`io.github.softfever.Or
 I added a short note at `docs/kb/apps/orcaslicer.md` and an entry in the KB index. The two background tasks in that notification were only waiters whose work had already finished, so nothing is lost.
 <!-- ------ -->
 ---
+Your K1 is on stock firmware and isn't rooted yet, so I'll hold off on configuring a printer backend. Before I pick one, I need to confirm how you want to proceed.
+
+Your options:
+
+1. **Wait until the K1 is rooted with Klipper and Moonraker.** Then I'd configure `PRINTER_TYPE=klipper` on port 7125, using the printer's IP address and an API key only if Moonraker requires one. This is the path the guide documents best for K1-class printers. Until then, the server is already registered with OrcaSlicer, so you can slice from your agent. Printing stays off.
+2. **Try the `creality` backend now** against stock firmware. The guide marks it unverified, with no hardware reports, and I don't know whether the stock K1 exposes its API on port 80. I'd try it only if you want to test that.
+
+Which one do you want? Please also send the printer's IP address (or hostname) so I can set it up later. Don't paste any API keys or access codes into chat. I'll tell you where to put those when the time comes.
+
+Once you choose, I'll update the `3d-printer` entry in `~/.claude.json`. You'll also need to restart Claude Code so it loads the server.
+<!-- ------ -->
+---
