@@ -37,3 +37,14 @@ Run `wsl --shutdown` from Windows and reopen the terminal. The upgrade replaced 
 The KB in `docs/kb/` has the details, and I didn't touch `docs/history.md`. It already shows as modified in git, so I haven't committed anything.
 <!-- ------ -->
 ---
+OrcaSlicer 2.5.0 is installed and starts correctly under WSLg. I ran it for 25 seconds with no errors, until my timeout stopped it. I didn't open a model or slice anything.
+
+Your earlier install never finished, so the run failed with "not installed". The Flathub remote is system-wide, so the install needed sudo. I installed the stable branch along with the GNOME 50 runtime it requires.
+
+To run it, use `flatpak run com.orcaslicer.OrcaSlicer`. It will probably also be in your Windows Start menu after `wsl --shutdown`, but I haven't checked.
+
+On first launch it found settings from an older install (`io.github.softfever.OrcaSlicer`) and migrated them, so your profiles should carry over.
+
+I added a short note at `docs/kb/apps/orcaslicer.md` and an entry in the KB index. The two background tasks in that notification were only waiters whose work had already finished, so nothing is lost.
+<!-- ------ -->
+---

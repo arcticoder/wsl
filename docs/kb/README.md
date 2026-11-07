@@ -6,3 +6,4 @@ Host: WSL2 Ubuntu on user's desktop "hercules". Not a server; safe to work in. N
 - Lesson: long-running system ops must be launched detached (setsid nohup), not as the tool's background task.
 - Current OS: Ubuntu 26.04.1 LTS (since 2026-11-07). python3=3.14; 3.12 held at noble build; see upgrade note.
 - Before ANY apt/dpkg op touching linux-tools/linux-perf: umount /usr/bin/perf, then remount (apt/perf-bind-mount.md).
+- apps/orcaslicer.md  OrcaSlicer flatpak install + notes
