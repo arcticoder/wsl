@@ -215,3 +215,14 @@ Use .env SUDO_PASSWORD for any sudo needs. This is just wsl on my desktop, not a
 The handoff file also says: read `docs/kb/session-context.md` first. It covers the printer's no-heat and no-print rule, the unverified nozzle sensor, and the MCP setup.
 <!-- ------ -->
 ---
+Both items are handled, but the KB changes are not committed yet.
+
+**1. Claude co-author trailers removed.** Commits 5092a00 ("Add README and MIT license") and 4000a35 ("KB: add session context handoff and index entry") still had `Co-Authored-By: Claude Haiku 5.5` lines. I removed them and rewrote history from 5092a00 onward. Before rewriting, I saved a backup bundle in the scratchpad. The file contents are unchanged: the tree is identical to the old head. I force-pushed to `origin/main` with a lease check, so the remote moved from 9b4053d to de56273. No commit in the repo mentions Claude now.
+
+**2. Lab repos.** I read your note as "don't get ahead": I have not touched `lab` or `spurious-force-balance`. The wsl repo stays separate until it's public.
+
+**KB update.** I added `docs/kb/wsl/git-history-rewrite.md` with the no-Claude attribution rule and the rewrite steps, and indexed it in `docs/kb/README.md`. I did not write to `docs/history.md`. I also did not add a Claude trailer to any new commit, since your rule overrides the default attribution reminder.
+
+Want me to commit the KB change? I left it uncommitted so you can review it first.
+<!-- ------ -->
+---
