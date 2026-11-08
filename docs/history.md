@@ -166,3 +166,30 @@ The 3MF step isn't automated. The orcaslicer MCP server (0.1.19) has no project-
 The next time you want to print with MCP, check the sensor first, and I'll set up the start step with its safety checks.
 <!-- ------ -->
 ---
+The repo is clean of secrets and ready to go public. It's still private, and I haven't changed its visibility.
+
+**Your two questions:** both were reports, not requests.
+
+**Audit results**
+- **No secrets found.** The sudo password, the printer's root password, and the slicer's API token don't appear in the tracked files or in any of the 11 commits. `.env` has never been committed.
+- **Identifying details are present.** These aren't credentials, but they'd be public:
+  - the printer's LAN address `192.168.1.70` and the subnet `192.168.1.0/24`
+  - the hostname `hercules` and printer name `K1-FA35`
+  - your Linux username `echo_` in paths such as `/home/echo_`
+- **`docs/history.md` is the main concern.** It's the raw chat log, so it carries all of the above and more. I'd remove it from the public version. Removing it from the current tree doesn't erase it from history, so it would take a fresh repo or a history rewrite.
+- **Author metadata is safe.** Commits use a placeholder name and address, and GitHub's noreply address.
+
+**What I set up (still private)**
+- **README:** `README.md` describes the repo and its contents without any addresses or usernames.
+- **License:** `LICENSE` is MIT. I used "arcticoder" as the copyright holder, since that's your GitHub owner. Tell me if you want a different name.
+- **Commit:** `5631602`, pushed to `origin/main`. GitHub now detects the license as MIT.
+- **About:** "Personal WSL sysadmin notes: Ubuntu 24.04 to 26.04 upgrade, apt fixes, OrcaSlicer, and Creality K1 Klipper/Moonraker setup."
+- **Topics:** wsl, ubuntu, sysadmin, orcaslicer, klipper, moonraker, creality-k1, 3d-printing, mcp, knowledge-base.
+
+**Before you make it public, decide:**
+1. Whether to remove `docs/history.md` from the repo.
+2. Whether to scrub the LAN addresses, hostname and username from the KB notes. I can do that as a separate commit.
+
+Let me know which you want, and I'll do it before you flip visibility.
+<!-- ------ -->
+---
