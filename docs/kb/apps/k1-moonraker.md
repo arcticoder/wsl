@@ -33,3 +33,14 @@ SSH: root, password auth only. Use SSH_ASKPASS helper (no sshpass installed). Pi
   SLICER_TYPE=orcaslicer, SLICER_PATH=~/.local/bin/orca-slicer (wrapper -> flatpak OrcaSlicer).
 - Verified get_printer_status returns state ready.
 - Print/temperature tools NOT tested (by design).
+
+## Follow-up 2026-11-07 (after power cycle)
+- Printer hung/needed power cycle at least twice (moonraker.log "Unsafe Shutdown Count" 1->3). Cause not found in logs.
+  Kernel logged "Possible SYN flooding on port 8082": python http.server had listen backlog 5.
+- Fix: /usr/data/printer_data/serve.py = ThreadingHTTPServer, request_queue_size=64. ctl script now uses it.
+- Mainsail: /usr/data/www/mainsail/config.json "port" null -> 7125 (Mainsail otherwise talks to the page port 8081).
+- Moonraker: [update_manager] enable_system_updates: False -> removes buildroot warning; PolKit warning also gone.
+- Verified: 7125/8081/8082 = 200, 40-way concurrent burst OK, /websocket 101 from Mainsail origin, MCP get_printer_status ready.
+- Boot hook /etc/init.d/S60moonraker confirmed working (servers came back after power cycle).
+- Python upgrade: NOT recommended. Printer Python is Creality's bundled 3.8 (klippy-env + system), no compiler,
+  GitHub unreachable, rootfs 97MB. Moonraker v0.10.0 works on 3.8; newer Moonraker needs 3.10.

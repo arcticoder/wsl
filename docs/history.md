@@ -86,3 +86,21 @@ Klipper and Moonraker both report ready. The MCP server reads the status, and I 
 Details, the control script, and gotchas are in `docs/kb/apps/k1-moonraker.md`, which has no credentials. I haven't committed anything.
 <!-- ------ -->
 ---
+All three URLs work now, and the MCP printer tools report the K1 as ready. I didn't start a print or change any temperatures.
+
+**Your numbered items:**
+1. **Port 8081 "Cannot connect to Moonraker":** Fixed. Mainsail was trying to reach Moonraker on the page's own port. I pointed its config at port 7125. Its WebSocket handshake succeeds from the Mainsail origin.
+2. **Port 8082 warnings:** Fixed. Moonraker's update provider caused the buildroot warning, and the PolKit one went away with it. Moonraker now reports no warnings.
+3. **Port 7125:** Works.
+4. **LAN without a password (history.md:72):** Left as is, per your call.
+5. **Python upgrade (history.md:77):** I recommend holding off. The K1 runs Creality's bundled Python 3.8 with no compiler, and GitHub is unreachable from the printer. Moonraker v0.10.0 runs fine on 3.8. A newer Moonraker would need a Python upgrade the printer can't support.
+6. **Fix the issue (history.md:78):** I fixed the Mainsail port and the update-provider warning. I left the PolKit message alone because it's cosmetic and it's gone now.
+7. **Rooted firmware (history.md:55):** Option 1 is already done. Moonraker and the web UIs are installed, and the MCP server is configured with `PRINTER_TYPE=klipper`, port 7125. The boot hook also brought the web UIs back after your power cycle.
+
+**Fixes I made on the printer:**
+- The web servers were single-threaded with a connection backlog of 5. The kernel logged SYN-flood drops on port 8082. They now run threaded with a backlog of 64. A 40-request burst returned 200 every time.
+- Your printer was hung or lost power at least twice. Moonraker's unsafe-shutdown counter went from 0 to 3. The logs don't show the cause. Watch for hangs under a heavy web-UI session. If it happens again, the first thing to check is `/usr/data/printer_data/logs/moonraker.log` and `dmesg` from the power-up.
+
+The KB note `docs/kb/apps/k1-moonraker.md` has these changes. I didn't touch `docs/history.md`.
+<!-- ------ -->
+---
