@@ -104,3 +104,22 @@ All three URLs work now, and the MCP printer tools report the K1 as ready. I did
 The KB note `docs/kb/apps/k1-moonraker.md` has these changes. I didn't touch `docs/history.md`.
 <!-- ------ -->
 ---
+The fork and orcaslicer-mcp are installed and registered. The MCP server can't reach OrcaSlicer yet because one setting is still off.
+
+**What you need to do:** open the fork (`flatpak run com.orcaslicer.OrcaSlicer`, already running), go to **Preferences → Remote API**, and tick **Enable Remote API**. Tell me when it's on and I'll check the connection. The setting is in the GUI only, and it controls remote access to the slicer, so I left it for you.
+
+**Setup:**
+- **OrcaSlicer fork:** the orcaslicer-mcp server needs a fork of OrcaSlicer that has a control API. Stock OrcaSlicer doesn't have one. I installed the fork's Flatpak per-user, verified against the published checksum, so `flatpak run com.orcaslicer.OrcaSlicer` now runs the fork. Your stock 2.5.0 install is untouched. To remove the fork, run `flatpak uninstall --user com.orcaslicer.OrcaSlicer`.
+- **orcaslicer-mcp:** installed through `uvx` (version 0.1.19) and registered in `~/.claude.json`. It starts and lists 56 tools. Restart Claude Code to load it.
+- **Printer tools:** the orcaslicer-mcp server doesn't move the printer or send G-code, so I did the printer checks directly through Moonraker.
+
+**K1 checks (no print, no heating):**
+- **Heaters:** off. The extruder is 24 °C, the bed 22 °C, and the chamber 22 °C.
+- **Homing:** G28 homed all three axes. The endstops all read open.
+- **Head move:** I moved to X100 Y100 Z20 with no extrusion. The position matched the target.
+- **Filament sensors:** `filament_sensor` reports no filament, which matches what you said. `filament_sensor_2` reports filament *detected*, and it sits on the nozzle board. That doesn't match your setup. It could be a stuck or misread switch, or a wiring fault. Press it by hand and watch its state to tell which.
+- **MCUs and probe:** all respond. The probe is untriggered.
+
+The head is parked at Z20 over the bed. Nothing else on the printer changed. The KB note is `docs/kb/apps/orcaslicer-mcp-fork.md`.
+<!-- ------ -->
+---

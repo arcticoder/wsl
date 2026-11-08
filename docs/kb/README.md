@@ -8,3 +8,4 @@ Host: WSL2 Ubuntu on user's desktop "hercules". Not a server; safe to work in. N
 - Before ANY apt/dpkg op touching linux-tools/linux-perf: umount /usr/bin/perf, then remount (apt/perf-bind-mount.md).
 - apps/orcaslicer.md  OrcaSlicer flatpak install + notes
 - apps/k1-moonraker.md  Creality K1 root + Moonraker/Mainsail/Fluidd install, MCP printer wiring
+- apps/orcaslicer-mcp-fork.md  OrcaSlicer fork + orcaslicer-mcp + K1 sensor/move checks
