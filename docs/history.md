@@ -193,3 +193,25 @@ The repo is clean of secrets and ready to go public. It's still private, and I h
 Let me know which you want, and I'll do it before you flip visibility.
 <!-- ------ -->
 ---
+Here's where everything stands.
+
+**1. My concern about `history.md`:** The only sensitive-adjacent content was the LAN addresses, the hostname, and your username in paths. The file has no passwords, tokens or keys. You've accepted the identifying details, so I'm not changing anything for it.
+
+**2. About and README:** I removed "sysadmin" from the README and the About text. I also removed the `sysadmin` topic.
+
+**3. LAN addresses:** Noted, no action.
+
+**4. Git identity:** Every commit now carries `Arcticoder <10162808+arcticoder@users.noreply.github.com>` as author and committer. That includes the two commits from before the rewrite. This required a force-push to the private `main`. I checked that the remote held only the old copies of the same commits before replacing them, and I kept a bundle backup of the pre-rewrite repo in the scratchpad.
+
+**5. KB and context block:**
+- **This repo's KB:** I added `docs/kb/session-context.md` with the working state, and indexed it in `docs/kb/README.md`. It's committed and pushed.
+- **The other two repos:** I haven't touched `lab` or `spurious-force-balance`. Both have a `docs/kb` folder, and I don't know which "both repos" you meant. Tell me if you want me to update those two, and what they should cover.
+- **Context block:** Your block is saved word for word in the handoff file. Here it is for pasting:
+
+```context
+Use .env SUDO_PASSWORD for any sudo needs. This is just wsl on my desktop, not a server, safe to work in. Just don't delete my code or installs. Never write to docs/history.md though feel free to read it as needed, that's our raw chat history (i just paste your completion messages into it).
+```
+
+The handoff file also says: read `docs/kb/session-context.md` first. It covers the printer's no-heat and no-print rule, the unverified nozzle sensor, and the MCP setup.
+<!-- ------ -->
+---
