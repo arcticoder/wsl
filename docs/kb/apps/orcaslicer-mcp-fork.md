@@ -17,3 +17,14 @@
 - filament_sensor (PC15, toolhead? main): filament_detected=false (matches "no filament").
 - filament_sensor_2 (nozzle_mcu:PA10): filament_detected=TRUE while no filament loaded -> CHECK (stuck/wiring/misread).
 - Probe last_query false; bed_mesh default profile present; all MCUs (main, nozzle, leveling) respond.
+
+## Plates and layout over MCP (observed 2026-11-08, no slice, no save)
+- `load_model` of a 3MF with five plates in its metadata loaded one plate (`list_plates` count 1). Most objects were reported `plate: -1` (off every plate), because their saved positions lie outside plate 0's 220 x 220 mm bed. Only objects placed on plate 0 are sliceable.
+- `add_plate` creates a plate and moves every off-plate object onto it, so it is a way to gather stray objects, not a blank plate. The new plate's origin is offset by 264 mm in x or y from plate 0.
+- `move_object_to_plate` puts the object at a default offset on the target plate. Several objects moved to the same plate land on top of each other until placed explicitly.
+- `arrange_plate` is not limited to the current plate in this fork build: it redistributed objects across plates and removed empty ones. Do not use it on a multi-plate project without checking `list_plates` afterwards.
+- `check_placement` reports positions relative to bed 0 only, so it flags objects on other plates as overflowing. Use `list_plates` and `list_objects` (their `plate` field) as the source of truth.
+- The Orca project lives in memory only. Reloading the 3MF restores the file's contents; nothing is written back unless saved.
+
+## K1 state (2026-11-08)
+- The user reports the printer is switched off. Nothing was run against it in this session.
