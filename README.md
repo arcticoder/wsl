@@ -1,6 +1,6 @@
 # wsl
 
-Personal sysadmin notes and a small knowledge base for an Ubuntu 24.04 → 26.04 WSL2 setup. It covers the upgrade and its recovery steps, apt and dpkg fixes, OrcaSlicer, and a Creality K1 running Klipper and Moonraker, plus the MCP tooling used to drive them.
+Personal notes and a small knowledge base for an Ubuntu 24.04 → 26.04 WSL2 setup. It covers the upgrade and its recovery steps, apt and dpkg fixes, OrcaSlicer, and a Creality K1 running Klipper and Moonraker, plus the MCP tooling used to drive them.
 
 ## Contents
 
