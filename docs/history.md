@@ -123,3 +123,25 @@ The fork and orcaslicer-mcp are installed and registered. The MCP server can't r
 The head is parked at Z20 over the bed. Nothing else on the printer changed. The KB note is `docs/kb/apps/orcaslicer-mcp-fork.md`.
 <!-- ------ -->
 ---
+Two things are done and one needs your input.
+
+**Sudo**
+- I added a sudoers drop-in at `/etc/sudoers.d/90-echo-nopasswd` that lets `echo_` run any command with `sudo` and no password. The file is syntax-checked with `visudo`, and `sudo -n` works.
+- I removed `SUDO_PASSWORD` from `.env`. The printer's `CREALITY_*` lines are still there, since I need them for SSH.
+- The tradeoff is that anything running as your user can become root. That's a reasonable call on a personal WSL box, but it's the one thing to weigh.
+- Other options I considered: moving the password into a keyring just changes where it's stored, since I'd still read it in plaintext. A narrower rule that lists only specific commands (`apt`, `dpkg`, `flatpak`, `mount`) is safer, but it breaks whenever something else needs root. I can switch to that if you'd rather have it.
+- The same plaintext-storage concern applies to the printer's root password in `.env`.
+
+**Orca MCP**
+- The fork's API now responds. My earlier failure came from a wrong header on my side, not from the setup. `orcaslicer-mcp` should now reach the slicer.
+
+**Nozzle sensor (`filament_sensor_2`)**
+- I'm reading `filament_sensor_2` as the nozzle-side sensor, on the nozzle board's pin PA10. It currently reports filament present, and you report none loaded.
+- First, check the toolhead path for leftover filament from the last print, such as a broken tail or a stray piece. The nozzle is cold, so you can remove it by hand.
+- Then press the sensor. I don't know its physical form, so press whatever lever, arm, or plunger is at the nozzle-side filament path. Hold it for about 3 seconds, release it, and wait about 5 seconds. Repeat once.
+- A background logger has been recording state changes since 20:50 and runs for 30 minutes. Tell me when you've pressed it, and I'll read the log.
+- Mainsail (http://192.168.1.70:8081) also shows the sensor state live if you'd rather watch it there.
+- If the state flips to "not detected" when you press it and back to "detected" when you release, the sensor works. Detected at rest then points to something in the path, such as debris or leftover filament.
+- If it stays "detected" no matter what you do, the sensor or its wiring is faulty. That matters before any print, because `pause_on_runout` relies on this sensor to catch a run-out.
+<!-- ------ -->
+---
