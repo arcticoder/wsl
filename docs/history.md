@@ -60,3 +60,29 @@ Which one do you want? Please also send the printer's IP address (or hostname) s
 Once you choose, I'll update the `3d-printer` entry in `~/.claude.json`. You'll also need to restart Claude Code so it loads the server.
 <!-- ------ -->
 ---
+Moonraker is running on your K1, Mainsail and Fluidd are being served from it, and the MCP server connects to the printer and reports it as ready.
+
+- **Mainsail:** http://192.168.1.70:8081
+- **Fluidd:** http://192.168.1.70:8082
+- **Moonraker API:** http://192.168.1.70:7125
+
+Klipper and Moonraker both report ready. The MCP server reads the status, and I didn't start a print or change any temperatures.
+
+**Before you use the web UIs:**
+- **No password on the LAN.** Moonraker trusts anything on 192.168.1.0/24 without an API key, so anyone on your network can control the printer. Tell me if you want that tightened.
+- **Restart Claude Code** so it loads the updated printer settings.
+- **Boot persistence is untested.** A boot hook is installed, but I haven't rebooted the printer. Reboot it when no print is running and check that the web UIs come back.
+
+**Things that differ from a standard install:**
+- Moonraker is v0.10.0, not the latest. Newer releases need Python 3.10, and the K1 has 3.8.
+- Notifications (apprise) are not installed, because PyYAML won't build on this printer.
+- The printer's Python already had the compiled Pillow and file-upload libraries, so I reused them instead of building them.
+- The web UIs run on Python's built-in static file server. That's fine for your LAN, but don't expose those ports to the internet.
+
+**Changes on the printer:**
+- The config was backed up to `/usr/data/backup-preinstall-20261107/config` before I changed anything. I didn't edit `printer.cfg`.
+- Creality firmware updates may remove the boot hook or the web servers.
+
+Details, the control script, and gotchas are in `docs/kb/apps/k1-moonraker.md`, which has no credentials. I haven't committed anything.
+<!-- ------ -->
+---
