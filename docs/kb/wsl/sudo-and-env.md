@@ -1,7 +1,6 @@
-# sudo / .env
-- User authorised using SUDO_PASSWORD from repo-root `.env` for sudo.
-- .env format is `SUDO_PASSWORD <value>` (SPACE separated, not `=`). `source .env` FAILS
-  ("SUDO_PASSWORD: command not found"). Parse: `PW=$(awk '$1=="SUDO_PASSWORD"{print $2}' .env)`
-  then `echo "$PW" | sudo -S -p '' <cmd>`.
-- Never print/log the value or copy it into docs. Check .env is gitignored before committing anything.
-- Env quirk: `systemctl is-system-running` = degraded (normal here).
+# sudo (updated 2026-11-07)
+- sudo is passwordless for echo_: /etc/sudoers.d/90-echo-nopasswd -> `echo_ ALL=(ALL) NOPASSWD: ALL` (0440, visudo-checked).
+- SUDO_PASSWORD was REMOVED from repo .env at user request. Do not re-add it. Use `sudo -n <cmd>` (no prompt).
+- Tradeoff: any process running as echo_ can become root. Accepted by user for this personal WSL box.
+  To narrow later: replace the rule with a command list (e.g. apt, dpkg, flatpak, mount, umount).
+- .env still holds CREALITY_* (printer SSH root creds). Only that file is gitignored; keep it that way.
