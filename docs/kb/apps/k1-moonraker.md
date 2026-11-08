@@ -44,3 +44,18 @@ SSH: root, password auth only. Use SSH_ASKPASS helper (no sshpass installed). Pi
 - Boot hook /etc/init.d/S60moonraker confirmed working (servers came back after power cycle).
 - Python upgrade: NOT recommended. Printer Python is Creality's bundled 3.8 (klippy-env + system), no compiler,
   GitHub unreachable, rootfs 97MB. Moonraker v0.10.0 works on 3.8; newer Moonraker needs 3.10.
+
+## Pre-power-down prep (2026-11-07)
+- MCP env: 3d-printer gets SLICER_PROFILE = K1 machine;process|PLA (Creality K1 0.4 nozzle, 0.16mm Optimal, Creality Generic PLA @K1).
+  orcaslicer gets ORCA_PRINTER_URL=http://192.168.1.70:7125, ORCA_PRINTER_ID=creality-k1. Restart Claude Code to load.
+- Tested STL -> G-code with 3d-printer slice_stl on a 20 mm cube (slicer = fork CLI via wrapper). Wrapper now passes
+  --filesystem=/tmp so the sandboxed slicer can write MCP output dirs in host /tmp.
+  confirm_temperatures: extruder 220, bed 55 (PLA). Output ~291 KB.
+- Uploaded with upload_gcode print=false -> printed nothing. Test file deleted from printer afterwards.
+- Printer gcodes folder holds ~150 prior jobs; DO NOT bulk delete.
+- orcaslicer MCP get_printer_status works via ORCA_PRINTER_URL (idle, homed xyz).
+- load_model works in fork. save_project NOT available: orcaslicer-mcp 0.1.19 has no such tool and fork mcp.14 lacks
+  project-file tools (README says mcp.15). So the STL->3MF project step is not automated yet; the STL->G-code path does not need it.
+- Test object removed from fork plate (delete_object takes object_id).
+- Stray-filament assumption for filament_sensor_2 (nozzle_mcu PA10) per user. Not verified physically.
+- Background sensor logger stopped.

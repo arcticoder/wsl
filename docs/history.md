@@ -145,3 +145,24 @@ Two things are done and one needs your input.
 - If it stays "detected" no matter what you do, the sensor or its wiring is faulty. That matters before any print, because `pause_on_runout` relies on this sensor to catch a run-out.
 <!-- ------ -->
 ---
+Yes, the printer is ready to power down.
+
+**1. Reverted:** I removed the passwordless sudo rule. `.env` has the `SUDO_PASSWORD` you put back, and it works for `sudo`. The KB note now matches that setup.
+
+**2. STL to printer:** I tested the STL-to-G-code-to-printer chain with a 20 mm cube:
+- **Slice:** the printer MCP's `slice_stl` produced G-code with the K1 profiles. The nozzle target is 220 °C and the bed 55 °C, both normal for PLA.
+- **Upload:** `upload_gcode` with `print=false` sent it to the printer. Nothing started, and I deleted the test file afterward.
+
+The 3MF step isn't automated. The orcaslicer MCP server (0.1.19) has no project-save tool, and the newest fork build (mcp.14) lacks project-file tools. Loading an STL into the fork works, so you can still build the 3MF in the GUI. The STL-to-G-code path doesn't need a 3MF.
+
+**3. Filament sensor:** I'm assuming it's stray filament, as you said, and I haven't checked it. The file `docs/kb/apps/k1-moonraker.md` has the details. Before a real print, clear the nozzle-side path. A sensor that stays "detected" would hide a run-out.
+
+**4. Before powering down:**
+- **Printer:** idle, heaters off, head parked at X100 Y100 Z20. Moonraker and both web UIs are up. They come back after a power cycle, which I tested earlier.
+- **Restart Claude Code:** the new environment variables are for the slicer profile and the printer URL.
+- **Leave the gcode folder alone:** it holds about 150 earlier prints, and I didn't change any of them.
+- **Stopped:** the sensor logger. The test object is off the fork's plate.
+
+The next time you want to print with MCP, check the sensor first, and I'll set up the start step with its safety checks.
+<!-- ------ -->
+---
