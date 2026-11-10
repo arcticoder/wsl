@@ -11,3 +11,4 @@ Host: WSL2 Ubuntu on user's desktop "hercules". Not a server; safe to work in. N
 - apps/k1-moonraker.md  Creality K1 root + Moonraker/Mainsail/Fluidd install, MCP printer wiring
 - apps/orcaslicer-mcp-fork.md  OrcaSlicer fork + orcaslicer-mcp + K1 sensor/move checks
 - session-context.md  paste-ready context block for the next chat + working state (printer, MCP, sudo rules)
+- ../print-session-runbook.md  step-by-step for printing sessions (pre-slice, connectivity, loading, start, monitor) and the failure checks

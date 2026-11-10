@@ -75,3 +75,9 @@ SSH: root, password auth only. Use SSH_ASKPASS helper (no sshpass installed). Pi
 - Do not park the head over the plate and then heat: after G28 and a mesh the nozzle sits at X110 Y110; move it to a corner (G1 X10 Y210) and lower the bed (G1 Z120) before M104, or filament oozes onto the plate.
 - The K1 dropped off the network while idle at 225 C (no ping, no ports) and came back after the user reconnected its Wi-Fi on the touchscreen; WSL could reach it again then. A hot idle nozzle with no connection is a safety item: ask the user to check it.
 - Upload and start without the MCP: `curl -F file=@x.gcode -F print=true http://192.168.1.70:7125/server/files/upload` returned `print_started: true` and the print began.
+
+## 2026-11-10
+- Print hours: Moonraker's `server/history/totals` undercounts (1.61 h, then 2.85 h after the 2026-11-09 evening print). The touchscreen counter showed 131 h on 2026-08-06, and more has been printed since; the touchscreen total is the one the 300 h self-test rule uses, and only the user can read it.
+- Pre-sliced plate G-code lives in `~/.orcaslicer-mcp/gcode/` (`balance_p0_post_nn`, `balance_p1_posts_np_pn_pp`, `balance_p2_base`, `balance_p3_gantry`, `balance_p4_strip_guide`). `save_gcode` records `model_name` as the first object in the project, not the plate's parts; read `EXCLUDE_OBJECT_DEFINE` lines in the file instead.
+- Orca MCP plate workflow that worked (mcp.14): `delete_object` for printed parts, `load_model` the 3MF, `add_plate(select=false)`, `move_object_to_plate` (lands at the plate centre), `transform_object translate` to space parts, `select_plate`, `slice_and_wait`, `save_gcode`. Plates in `list_plates` are laid out on a grid with 264 mm pitch; object offsets in `list_objects` use global coordinates.
+- Session procedure: `print-session-runbook.md` (this folder's parent).

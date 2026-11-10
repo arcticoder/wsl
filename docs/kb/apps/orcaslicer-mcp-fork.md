@@ -33,3 +33,7 @@
 - The per-user fork install had disappeared (only stock 2.5.0 system install left; stock has no Remote API, so `flatpak run com.orcaslicer.OrcaSlicer` started the wrong app). Reinstalled mcp.14 from the GitHub release (sha256 f0fc8584... verified) with `flatpak install --user --bundle`. Newer releases exist (mcp.16 on 2026-11-09); `open_project` needs mcp.15 or later, so use `load_model` on a 3MF with mcp.14 (it carries per-object settings and brings all 19 objects in; delete the unwanted ones, then `arrange_plate`).
 - Toggling Preferences -> Remote API (or "allow LAN access") after the app is running leaves the listening socket held by a WebKit helper process: the log shows `remote-api: failed to bind port 13130: Address already in use`, the port accepts connections but never replies, and every tool call times out ("ui_timeout"). Fix: quit Orca completely (check `ss -ltnp | grep 13130` is empty), relaunch it, do not touch that preference. The saved settings (enabled, token, LAN) persist.
 - `set_config` takes `{"changes": {...}}`. `get_config` is huge: avoid it.
+
+## 2026-11-10
+- A copy of the mcp.14 bundle and its SHA256SUMS now sits in `~/tools/orcaslicer-mcp/` (outside session folders) because the per-user install vanished once. Reinstall: check the checksum, then `flatpak install --user --bundle <file>`.
+- Full session procedure and the list of failures with their checks: `docs/print-session-runbook.md`.

@@ -30,3 +30,6 @@ Use .env SUDO_PASSWORD for any sudo needs. This is just wsl on my desktop, not a
 - sudo password lives only in .env (SUDO_PASSWORD, space separated). The user rotated the WSL password and put the value back.
 - Passwordless sudo was tried and reverted at the user's request. Do not re-add it.
 - .env holds CREALITY_* printer SSH credentials too. Never print or commit .env values.
+
+## Printing sessions (2026-11-10)
+Follow `../print-session-runbook.md` at the start of every session (pre-sliced G-code, connectivity check, no extra levelling, park before heating, Orca port-lock rule). Touchscreen print hours are the real total (131 h on 2026-08-06).
