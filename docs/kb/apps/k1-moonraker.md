@@ -68,3 +68,10 @@ SSH: root, password auth only. Use SSH_ASKPASS helper (no sshpass installed). Pi
 - Orca warns on every slice: bed temperature higher than the filament profile allows, and nozzle hardness lower than the profile requires. Both come from using the "Generic PLA @System" filament preset with a 60 C bed; harmless in this print.
 - Flow: `save_gcode` then `upload_gcode` with `print=true` and `material=PLA` started the print; the call's `print_started: false` in its reply was wrong (the printer was printing seconds later), so check `print_stats.state`. A Monitor polling `print_stats` every 15 s caught the end (`complete`).
 - Per-part mass from the G-code: sum the E moves between `EXCLUDE_OBJECT_START NAME=` and `EXCLUDE_OBJECT_END` times pi*(0.875 mm)^2*1.24 g/cm3 (the part masses sum to about 93% of the slicer's total, the rest is purge and supports). vane_holder: 0.93 g.
+
+## 2026-11-09
+- Total print time per Moonraker `server/history/totals`: 5805 s (1.61 h, one job) before tonight; user rule: when it reaches 300 h, ask the user to re-run the printer's equipment self-test.
+- Bed mesh re-probed (G28 then BED_MESH_CALIBRATE, no heating): front row +1.14 mm to back row -0.28 mm, still a front-to-back tilt of about 1.4 mm. Which end is physically low is still unconfirmed.
+- Do not park the head over the plate and then heat: after G28 and a mesh the nozzle sits at X110 Y110; move it to a corner (G1 X10 Y210) and lower the bed (G1 Z120) before M104, or filament oozes onto the plate.
+- The K1 dropped off the network while idle at 225 C (no ping, no ports) and came back after the user reconnected its Wi-Fi on the touchscreen; WSL could reach it again then. A hot idle nozzle with no connection is a safety item: ask the user to check it.
+- Upload and start without the MCP: `curl -F file=@x.gcode -F print=true http://192.168.1.70:7125/server/files/upload` returned `print_started: true` and the print began.
