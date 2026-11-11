@@ -28,6 +28,8 @@ Hard rules (user): nothing heats or prints without the user's explicit request i
 14. The Wi-Fi dropped twice on 2026-11-09 (idle at 225 C, and 90 s into a print). The print continues on the printer. A hot idle nozzle with no connection is the safety case: ask the user to look at the printer. Keep the monitor running through reconnection.
 15. After the print: read `server/history/totals` and the last job, then update the TODO files and the notes; ask the user to inspect the parts when the bed is cool.
 
+Step 7a (added 2026-11-11): there is no camera and the user is in an office away from the balcony with the door shut. When the user must look at the printer, give a clock time and exactly what to see; they cannot hear the extruder. First-layer look about 8-10 min after the start (corners flat, lines continuous); one mid-print look. Armed Monitor on `print_stats` (15 s poll, offline 10 min alert); re-arm every 30 min. Expect Wi-Fi flaps in the first half hour: a short drop is not an emergency and the print continues.
+
 ## D. Things that went wrong and the check that prevents each
 
 | Problem | Check |

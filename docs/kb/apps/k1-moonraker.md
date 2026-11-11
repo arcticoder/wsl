@@ -81,3 +81,10 @@ SSH: root, password auth only. Use SSH_ASKPASS helper (no sshpass installed). Pi
 - Pre-sliced plate G-code lives in `~/.orcaslicer-mcp/gcode/` (`balance_p0_post_nn`, `balance_p1_posts_np_pn_pp`, `balance_p2_base`, `balance_p3_gantry`, `balance_p4_strip_guide`). `save_gcode` records `model_name` as the first object in the project, not the plate's parts; read `EXCLUDE_OBJECT_DEFINE` lines in the file instead.
 - Orca MCP plate workflow that worked (mcp.14): `delete_object` for printed parts, `load_model` the 3MF, `add_plate(select=false)`, `move_object_to_plate` (lands at the plate centre), `transform_object translate` to space parts, `select_plate`, `slice_and_wait`, `save_gcode`. Plates in `list_plates` are laid out on a grid with 264 mm pitch; object offsets in `list_objects` use global coordinates.
 - Session procedure: `print-session-runbook.md` (this folder's parent).
+
+## 2026-11-11
+- The K1 has no camera usable from WSL: `server/webcams/list` is empty and ports 8080 and 4408 are closed; the `3d-printer` MCP `camera_snapshot` cannot help (Klipper type has no snapshot URL). Visual checks are the user's, with a clock time each.
+- From cold and unhomed, `G1` moves are refused: run `G28` first (safe cold), then `G90`, `G1 Z120 F600`, `G1 X10 Y210 F6000`, then `M104 S225`. Extruding 80 mm at 150-200 mm/min through the hot nozzle at the rear-left drops a strand onto the plate corner: the user lifts it off before the print.
+- Upload-and-start with curl worked again (`print_started: true`; `print_stats.state` = `printing`). The first minutes show nozzle 135 °C and bed warming (the printer's own levelling) with `print_duration` 0; G-code `progress` is by file position, not time.
+- Wi-Fi: repeated drops 7:19-7:50, none 7:50-8:52 then stable (see the repo's `docs/kb/printing_state.md`). The print continued on the printer through every drop.
+- Print hours: `server/history/totals` still 2.85 h before today's gantry (10268 s).
