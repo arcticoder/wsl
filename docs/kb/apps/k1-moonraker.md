@@ -88,3 +88,7 @@ SSH: root, password auth only. Use SSH_ASKPASS helper (no sshpass installed). Pi
 - Upload-and-start with curl worked again (`print_started: true`; `print_stats.state` = `printing`). The first minutes show nozzle 135 °C and bed warming (the printer's own levelling) with `print_duration` 0; G-code `progress` is by file position, not time.
 - Wi-Fi: repeated drops 7:19-7:50, none 7:50-8:52 then stable (see the repo's `docs/kb/printing_state.md`). The print continued on the printer through every drop.
 - Print hours: `server/history/totals` still 2.85 h before today's gantry (10268 s).
+
+## Bed-mesh reading convention (2026-11-11, from Klipper's `bed_mesh.py`, upstream master)
+- `probed_matrix` row 0 is the minimum Y (the front on this printer); rows climb in Y, columns in X. A stored value is the probed Z minus the reference (`z_pos = result[2] - z_offset`); a positive value means the bed surface is lower than the reference there (the toolhead is raised by the value at that point). Klipper's docs do not state either point; the source does. Creality's fork is not checked for changes.
+- Reading of 2026-11-10 (front row +1.14 mm, back row -0.28 mm): the front edge is the low end, by about 1.4 mm. The mesh compensates it on every print; no bed-screw step unless a first layer shows a front-to-back squish gradient.
