@@ -44,3 +44,6 @@ Step 7a (added 2026-11-11): there is no camera and the user is in an office away
 | Double levelling | step 9 |
 | Window overrun | step 3 fit table |
 | Spool too light | step 4 mass check; plan a pause, swap, resume instead of discarding a part spool |
+
+## E. Added 2026-11-12: first print after a power-on or restart
+The fast start (`PRINT_PREPARED`, step 9 and `kb/printing_state.md` in spurious-force-balance) crashes Klipper into Shutdown when no full `START_PRINT` has run since Klipper booted (`CX_PRINT_DRAW_ONE_LINE` has no `extruder_temp`): the first print of a session uses the normal start (upload with `print=true` only; about 8-10 min of start-up). Recover from a shutdown with `curl -X POST http://192.168.1.70:7125/printer/firmware_restart`. `G28` cools the nozzle to about 140 C: do any hand purge after `M109`. Check the `START_PRINT` line of each G-code for `BED_TEMP=` (the header can disagree).
