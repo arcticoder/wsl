@@ -43,3 +43,10 @@
 - Old mcp.14 was uninstalled from --user; stock 2.5.0 system install untouched. Bundle + SHA256SUMS copied to ~/tools/orcaslicer-mcp/ (mcp.14 bundle still there as fallback).
 - Remote API settings survived (remote_api_enabled, bind_lan true). Port 13130 listened right after launch; get_status returned connected_to "OrcaSlicer MCP build", app 2.5.0.
 - orcaslicer-mcp PyPI latest is 0.1.25. Registration in ~/.claude.json is unpinned (`uvx orcaslicer-mcp`), so a fresh MCP start gets latest. Already-running servers keep their old version until restart.
+
+## 2026-11-13 update: Orca 2.5.0
+- The user flatpak is now OrcaSlicer 2.5.0 (`flatpak run com.orcaslicer.OrcaSlicer`) with the Remote API built in; it came up on 13130 about 10 s after launch (GPU/MESA warnings in the log are harmless). A second Orca instance on the same port made `get_status` time out (`ui_timeout`); 13131 answered HTTP 401 (token needed). Check `ss -ltn | grep 1313` before blaming the MCP.
+- A fresh Untitled project has stock Creality settings (220/220 C, bed 55, 2 walls, 15 %, prime tower on, speeds up to 300 mm/s); `check_profile_physics` blocks them (flow 24 mm3/s). `set_config` with `filament_max_volumetric_speed` 12 and wall/infill speeds 100-120 mm/s passes. The settings that carried over across `new_project` (kept as unsaved edits) saved re-doing them. The working set is in spurious-force-balance `docs/kb/printing_state.md` (2026-11-13 evening entry).
+- `open_project` of a 3MF that carries its own start G-code is refused (`blocked_by_remote_api_policy`); the user must open it in the window or tick Preferences > Remote API > Allow script edits (not touched).
+- The orcaslicer-mcp bridge processes (`uvx orcaslicer-mcp`) can be killed safely; they restart on the next tool call.
+

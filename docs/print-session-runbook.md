@@ -47,3 +47,11 @@ Step 7a (added 2026-11-11): there is no camera and the user is in an office away
 
 ## E. Added 2026-11-12: first print after a power-on or restart
 The fast start (`PRINT_PREPARED`, step 9 and `kb/printing_state.md` in spurious-force-balance) crashes Klipper into Shutdown when no full `START_PRINT` has run since Klipper booted (`CX_PRINT_DRAW_ONE_LINE` has no `extruder_temp`): the first print of a session uses the normal start (upload with `print=true` only; about 8-10 min of start-up). Recover from a shutdown with `curl -X POST http://192.168.1.70:7125/printer/firmware_restart`. `G28` cools the nozzle to about 140 C: do any hand purge after `M109`. Check the `START_PRINT` line of each G-code for `BED_TEMP=` (the header can disagree).
+
+## F. Added 2026-11-14 (first full session run by the runbook)
+- Before the window: verify each G-code's `START_PRINT ... BED_TEMP=` and `EXCLUDE_OBJECT_DEFINE` lines (done for p7, p8, p10), and name the spool (bagged on a roller; the strand feeds through the bag).
+- Loading: park the head at about X200 Y110, Z120 (not the rear-left corner), `M104 S225`, the user hand-feeds, then `M83`, `G1 E40 F150`, `G1 E40 F200`; the heating request counts when the user says to decide or to go in that message.
+- Starting: the first print uses the normal start (upload with `print=true`); later prints in the same boot use the fast start sequence in `kb/apps/k1-moonraker.md`. Start the monitor right after the upload; give the first-layer look time (about 8-10 min after start on the normal start, 2-6 min on the fast start) and one mid-print look.
+- After a print: confirm both heater targets read 0 (the printer turns them off), report the bed temperature and the time to under 40 C (about 2.5 C/min), and only then ask for the plate to be cleared and for a go.
+- Monitor notices that arrive as system events are not the user's messages: the first line after a re-arm is a state read.
+
