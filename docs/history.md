@@ -226,3 +226,15 @@ Both items are handled, but the KB changes are not committed yet.
 Want me to commit the KB change? I left it uncommitted so you can review it first.
 <!-- ------ -->
 ---
+Both apps are updated and running, and the jlcone deb is deleted.
+
+**1. OrcaSlicer MCP fork: v2.5.0-mcp.18.** I downloaded the linux-x86_64 flatpak from the release you linked and checked it against the published SHA256. I replaced the user-level mcp.14 install with mcp.18. The stock 2.5.0 system install is untouched. I launched it with `flatpak run com.orcaslicer.OrcaSlicer`: Remote API port 13130 is listening and the Remote API settings carried over. The `orcaslicer` MCP server connects to it and reports app 2.5.0.
+- The old mcp.14 bundle is still in `~/tools/orcaslicer-mcp/` as a fallback.
+
+**2. jlcone: 1.0.72 → 1.0.73.** I installed the deb with `apt-get install ./`, which pulled in its dependencies. I relaunched it with `jlcone --remote-debugging-port=9222`; the debug endpoint answers and reports jlcone/1.0.73. I deleted `jlcone-1.0.73.deb` from the repo.
+
+**orcaslicer-mcp itself.** The PyPI package is at 0.1.25. The MCP registration is unpinned, so a fresh MCP start gets 0.1.25. The server already running still has its old version until the MCP is restarted (restart Claude Code to pick it up).
+
+**KB.** I updated `docs/kb/apps/orcaslicer-mcp-fork.md`, added `docs/kb/apps/jlcone.md`, and indexed it in `docs/kb/README.md`. Those changes are uncommitted for you to review.
+<!-- ------ -->
+---

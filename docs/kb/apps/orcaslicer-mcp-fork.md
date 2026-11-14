@@ -37,3 +37,9 @@
 ## 2026-11-10
 - A copy of the mcp.14 bundle and its SHA256SUMS now sits in `~/tools/orcaslicer-mcp/` (outside session folders) because the per-user install vanished once. Reinstall: check the checksum, then `flatpak install --user --bundle <file>`.
 - Full session procedure and the list of failures with their checks: `docs/print-session-runbook.md`.
+
+## 2026-11-13 update to fork mcp.18
+- Fork now v2.5.0-mcp.18 (user-level flatpak, ref master, app version 2.5.0). Release sha256 for linux-x86_64.flatpak 4e82ee94... verified.
+- Old mcp.14 was uninstalled from --user; stock 2.5.0 system install untouched. Bundle + SHA256SUMS copied to ~/tools/orcaslicer-mcp/ (mcp.14 bundle still there as fallback).
+- Remote API settings survived (remote_api_enabled, bind_lan true). Port 13130 listened right after launch; get_status returned connected_to "OrcaSlicer MCP build", app 2.5.0.
+- orcaslicer-mcp PyPI latest is 0.1.25. Registration in ~/.claude.json is unpinned (`uvx orcaslicer-mcp`), so a fresh MCP start gets latest. Already-running servers keep their old version until restart.
