@@ -108,3 +108,6 @@ SSH: root, password auth only. Use SSH_ASKPASS helper (no sshpass installed). Pi
 - **Loading:** the user seats the strand by hand through the extruder entrance with the feeder lever held and the nozzle at 225 C, then `M83`, `G1 E40 F150`, `G1 E40 F200`; the filament sensor reads False until the strand is in. Spools sit in a sealed freezer bag on a roller; the strand feeds through the bag.
 - **Totals:** 11 jobs, 12.03 h after the 2026-11-14 morning; no errors in 3 prints. Moonraker's monitor query used: `print_stats`, `extruder`, `heater_bed`, `display_status` every 15 s (Monitor expires after 30 min; its first line after each re-arm is a state read, not news).
 
+
+## 2026-11-15 (Sunday window)
+- Black-to-red filament swap needed about 110 mm of push at 225 C (80 mm still left mostly black, 110 mm cleared it); the cleared black strand falls on the plate and the user removes it before the start. Load at 16:09 (G28, G90, G1 Z120, G1 X200 Y110, M104 S225; 225 C in about 2 min), upload at 16:14:58, finish 17:37 for a 72-min file on the normal start; Moonraker totals 12 jobs, 14.06 h. A Monitor poll of `print_stats` every 15 s re-armed every 30 min worked; the first event after each re-arm is just the current state.
