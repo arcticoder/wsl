@@ -111,3 +111,10 @@ SSH: root, password auth only. Use SSH_ASKPASS helper (no sshpass installed). Pi
 
 ## 2026-11-15 (Sunday window)
 - Black-to-red filament swap needed about 110 mm of push at 225 C (80 mm still left mostly black, 110 mm cleared it); the cleared black strand falls on the plate and the user removes it before the start. Load at 16:09 (G28, G90, G1 Z120, G1 X200 Y110, M104 S225; 225 C in about 2 min), upload at 16:14:58, finish 17:37 for a 72-min file on the normal start; Moonraker totals 12 jobs, 14.06 h. A Monitor poll of `print_stats` every 15 s re-armed every 30 min worked; the first event after each re-arm is just the current state.
+
+## Session of 2026-11-21/22 (textured PEI, cold balcony): K1 facts learned
+- The plate is a textured PEI "A Plate" (Creality). A plate that is lifted off and put back must be re-meshed warm before printing: a badly seated edge showed as one mesh column +0.7 to +1.5 mm above its neighbours (spread 2.78 mm instead of the usual 1.5 mm front-to-back tilt) and the first layer drifted thread-thin. Sequence that worked: `M140 S60`, `G28`, `M190 S60`, `G4 P60000`, `BED_MESH_CALIBRATE` (about 3 min), read `bed_mesh.probed_matrix`, then `G90`, `G1 Z120 F600`, `G1 X10 Y210 F6000`, `M104 S225`, `M109 S225`, `PRINT_PREPARED`, upload with `print=true` (fast start).
+- A pause (`POST /printer/print/pause`) parks the head at X219 Y113 Z49 and drops the nozzle target to 140 C; parts that were cleared cannot resume: cancel (`/printer/print/cancel`). G-code posted through `/printer/gcode/script` returns `ok` immediately while moves (extrusions) are still queued; check the extruder `position` field of `toolhead` (4th value) or wait.
+- Loading: with no filament left in the nozzle, 60 mm of push produced no visible blob (the first grey out was mixed with residual black); park the head at X10 Y210 (outside the print area) before any test extrusion so a blob lands off the plate.
+- Cold: failures at 4 C (balcony, base 218 x 218 mm), success at 8 C with 148 x 150 mm plates. User's rule: no printing below 8 C.
+- Print time on these plates: the file-position `progress` lags (71 % at 59.7 min of 61.7 min).

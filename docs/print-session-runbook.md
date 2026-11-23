@@ -58,3 +58,9 @@ The fast start (`PRINT_PREPARED`, step 9 and `kb/printing_state.md` in spurious-
 
 ## G. Added 2026-11-14: Orca MCP preflight (before blaming a dialog)
 `get_status` timing out is usually a process problem, not a window dialog: more than one `uvx orcaslicer-mcp` bridge, or two Orca instances on port 13130. Preflight at the start of any slicing: `ss -ltn | grep 1313` (one listener on 13130), `pgrep -af orcaslicer` (one Orca, bridges at most one or two), `get_status` answers within a few seconds. Fix: kill the extra bridges (they restart on the next call); if Orca itself is doubled or the port is stale, quit Orca fully and relaunch it with `nohup flatpak run com.orcaslicer.OrcaSlicer`. Do not toggle Preferences > Remote API while it runs. Only after these checks ask the user to look for a dialog. Orca's saved preferences hold `remote_api_enabled`, port and token across restarts; nothing in the app needs changing for this. `new_project` needs `if_unsaved: "discard"` when the current project is dirty and keeps the print/filament edits.
+
+## H. Added 2026-11-22
+- A lifted-and-replaced plate needs a warm re-mesh before the fast start (see `kb/apps/k1-moonraker.md`, session of 2026-11-21/22); compare the mesh columns: one column off by more than about 0.5 mm from its neighbours means reseat the plate.
+- Park the head at the rear-left (X10 Y210) before any hand-load push or test extrusion; the head at X200 Y110 drips onto the plate.
+- Do not offer a plate whose start (cool-down, re-mesh, heat) leaves under 10 % margin before the window ends; the cool-down from 58 C to under 40 C takes about 8 minutes.
+- Slicing walls with a recessed face: lay the flat (outside) face down; check `bottom_surface` about 20 % of time and no `bridge` role in `slice_and_wait` before saving.
