@@ -118,3 +118,8 @@ SSH: root, password auth only. Use SSH_ASKPASS helper (no sshpass installed). Pi
 - Loading: with no filament left in the nozzle, 60 mm of push produced no visible blob (the first grey out was mixed with residual black); park the head at X10 Y210 (outside the print area) before any test extrusion so a blob lands off the plate.
 - Cold: failures at 4 C (balcony, base 218 x 218 mm), success at 8 C with 148 x 150 mm plates. User's rule: no printing below 8 C.
 - Print time on these plates: the file-position `progress` lags (71 % at 59.7 min of 61.7 min).
+
+## Session of 2026-11-25 (balcony, 21 C ambient at power-on; user-announced print day)
+- Power-on state read before anything hot: Klipper ready, standby, bed 21.0 C, nozzle 21.8 C, targets 0; Moonraker totals 17 jobs, 15.95 h (becoming 19 jobs, 17.7 h after two grey wall plates). Load, start and warm re-mesh sequences that worked, and the clock-time lessons, are in `docs/print-session-runbook.md` section I. Orca MCP: the `enclosure_walls` project kept its unsaved edits (3 walls, 20 % infill, 225/220 C, bed 60) across `delete_object`/`load_model`, so each next plate was just load, rotate, `slice_and_wait`, `save_gcode`. Wall plates: `py_a` `rotate [-90,0,0]` 1 h 3 min, `px_b` (2 x 100 x 150) `rotate [0,90,0]` 44 min 51 s; both with only an `internal_bridge` role and bottom_surface 20-21 %.
+- Warm re-mesh after replacing the plate: spread 1.56 mm, columns 0.09-0.18 mm mean (clean); `PRINT_PREPARED` then upload `print=true` started the print with the nozzle already at 227 C.
+
